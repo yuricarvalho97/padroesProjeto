@@ -125,7 +125,6 @@
         </div>
     </div>
 
-
     <!-- MODAL MENSAGENS ENVIADAS -->
     <div class="modal fade" id="msgEnviadas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
