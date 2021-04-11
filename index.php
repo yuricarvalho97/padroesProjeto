@@ -28,9 +28,19 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="cmpEmail">E-mail</label>
-                        <input type="email" class="form-control" id="cmpEmail" name="cmpEmail" required>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="cmpEmail">E-mail</label>
+                                <input type="email" class="form-control" id="cmpEmail" name="cmpEmail" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="cmpTelefone">Telefone</label>
+                                <input type="text" class="form-control" id="cmpTelefone" name="cmpTelefone" required>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="row">
@@ -52,7 +62,7 @@
                     </div>
 
                     <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="cmpAdmin" name="cmpAdmin" required>
+                        <input type="checkbox" class="form-check-input" id="cmpAdmin" name="cmpAdmin">
                         <label class="form-check-label" for="cmpAdmin">Usuário admin</label>
                     </div>
                     <button type="submit" class="btn btn-success w-100" name="enviarFormulario">
