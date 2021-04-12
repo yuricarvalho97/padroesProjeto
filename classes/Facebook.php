@@ -25,20 +25,16 @@ class Facebook implements RedeSocial
     }
     public function criarUsuario($dadosUsuario)
     {
-        $nome = $_POST['cmpNome'];
-        $nomeUsuario = filter_var($nome, FILTER_SANITIZE_STRING);
+        $redeSocialId = $dadosUsuario['redesocialId'];
+        $admin = $dadosUsuario['admin'];
+        $nome = $dadosUsuario['nome'];
+        $sobrenome = $dadosUsuario['sobrenome'];
+        $celular = $dadosUsuario['celular'];
+        $email = $dadosUsuario['email'];
+        $senha = $dadosUsuario['senha'];
 
-        $sobrenome = $_POST['cmpSobrenome'];
-        $sobrenomeUsuario = filter_var($sobrenome, FILTER_SANITIZE_STRING);
-
-        $telefone = $_POST['cmpTelefone'];
-        $telefoneUsuario = filter_var($telefone, FILTER_SANITIZE_STRING);
-
-        $email = $_POST['cmpEmail'];
-        $emailUsuario = filter_var($email, FILTER_SANITIZE_EMAIL);
-
-        $senha = $_POST['cmpSenha'];
-        $senhaUsuario = filter_var($senha, FILTER_SANITIZE_STRING);
+       $conn = "INSERT INTO usuario(redesocialidfk, admin, nome, sobrenome, senha, created_at) VALUES ('$redeSocialId', '$admin', '$nome', '$sobrenome', '$senha', now())";
+       $conn = "INSERT INTO email_usuario(usuarioidfk, enderecoemail) VALUES ('$usuarioidfk', '$email')";
     }
     public function removerUsuario($codigoUsuario)
     {

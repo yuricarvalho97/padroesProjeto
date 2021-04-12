@@ -12,7 +12,7 @@
         <hr>
         <div class="row">
             <div class="col-sm-12">
-                <form method="post" action="">
+                <form method="post" action="builder.php">
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">

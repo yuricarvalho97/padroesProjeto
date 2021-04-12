@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../interfaces/RedeSocial';
 
-class Facebook implements RedeSocial
+class Instagram implements RedeSocial
 {
 
     private $nomeRedeSocial;
