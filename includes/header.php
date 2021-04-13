@@ -1,8 +1,5 @@
 <?php
 require __DIR__ . "/../autoload.php";
-
-$DBconexao = new DBConexao();
-$conn = $DBconexao->retornarConexao();
 ?>
 
 <!DOCTYPE html>

@@ -2,7 +2,6 @@
 
 class Usuario
 {
-
     private $nomeUsuario;
     private $sobrenomeUsuario;
     private $celularUsuario;

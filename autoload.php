@@ -1,5 +1,7 @@
 <?php
 spl_autoload_register(function ($class) {
-    require "./classes/" . $class . ".php";
+    require_once __DIR__ . "/classes/" . $class . ".php";
 });
 
+$DBconexao = new DBConexao();
+$conn = $DBconexao->retornarConexao();

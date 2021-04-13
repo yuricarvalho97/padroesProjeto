@@ -54,9 +54,9 @@
                             <label for="cmpRedeSocial">Rede social</label>
                             <select class="custom-select" id="cmpRedeSocial" name="cmpRedeSocial" required>
                                 <option selected disabled value="">Escolha uma rede social</option>
-                                <option value="instagram">Instagram</option>
-                                <option value="facebook">Facebook</option>
-                                <option value="tipTop">Tip top</option>
+                                <option value="Instagram">Instagram</option>
+                                <option value="Facebook">Facebook</option>
+                                <option value="TipTop">Tip top</option>
                             </select>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                         <input type="checkbox" class="form-check-input" id="cmpAdmin" name="cmpAdmin">
                         <label class="form-check-label" for="cmpAdmin">Usuário admin</label>
                     </div>
-                    <button type="submit" class="btn btn-success w-100" name="enviarFormulario">
+                    <button type="submit" class="btn btn-success w-100" name="btnEnviarFormularioUsuario">
                         Finalizar
                         <i class="fa fa-check" aria-hidden="true"></i>
                     </button>
