@@ -52,8 +52,11 @@ class TipTop implements RedeSocial
     {
     }
 
-    public function criarUsuario($dadosUsuario)
+    public function criarUsuario($dadosUsuario, $redeSocialID)
     {
+       $usuarioDao = new UsuarioDao();
+       $usuarioDao->insert($dadosUsuario, $redeSocialID);
+       
     }
 
     public function removerUsuario($codigoUsuario)

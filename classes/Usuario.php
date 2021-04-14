@@ -1,10 +1,13 @@
 <?php
 
+//DAO
+require_once __DIR__ . '/../Dao/UsuarioDao.php';
+
 class Usuario
 {
     private $nomeUsuario;
     private $sobrenomeUsuario;
-    private $celularUsuario;
+    private $telefoneUsuario;
     private $emailUsuario;
     private $senhaUsuario;
     private $redeSocialUsuario;
@@ -26,17 +29,17 @@ class Usuario
 
     function setSobrenomeUsuario($sobrenomeUsuario)
     {
-        $this->nomeUsuario = $sobrenomeUsuario;
+        $this->sobrenomeUsuario = $sobrenomeUsuario;
     }
 
-    function getCelularUsuario()
+    function getTelefoneUsuario()
     {
-        return $this->celularUsuario;
+        return $this->telefoneUsuario;
     }
 
-    function setCelularUsuario($celularUsuario)
+    function setTelefoneUsuario($telefoneUsuario)
     {
-        $this->celularUsuario = $celularUsuario;
+        $this->telefoneUsuario = $telefoneUsuario;
     }
 
     function getEmailUsuario()
@@ -67,6 +70,13 @@ class Usuario
     function setRedeSocialUsuario($redeSocialUsuario)
     {
         $this->redeSocialUsuario = $redeSocialUsuario;
+    }
+
+    //Método para inserir usuário
+    public static function insere(Usuario $u){
+        $usuarioDao = new UsuarioDao;
+
+        $usuarioDao->insert($u);
     }
 
     public function criarMensagem()

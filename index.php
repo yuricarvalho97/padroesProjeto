@@ -56,7 +56,7 @@
                                 <option selected disabled value="">Escolha uma rede social</option>
                                 <option value="Instagram">Instagram</option>
                                 <option value="Facebook">Facebook</option>
-                                <option value="TipTop">Tip top</option>
+                                <option value="TipTop">TipTop</option>
                             </select>
                         </div>
                     </div>

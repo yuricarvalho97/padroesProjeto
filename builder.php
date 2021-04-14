@@ -1,4 +1,5 @@
 <?php
+require './classes/Usuario.php';
 
 //arquivo de conexao
 require "autoload.php";
@@ -46,5 +47,17 @@ if (isset($_POST['btnEnviarFormularioUsuario'])) {
             }
             break;
     }
+    $usuario = new Usuario;
 
+    $usuario->setNomeUsuario($_POST["cmpNome"]);
+    $usuario->setSobrenomeUsuario($_POST["cmpSobrenome"]);
+    $usuario->setEmailUsuario($_POST["cmpEmail"]);
+    $usuario->setTelefoneUsuario($_POST["cmpTelefone"]);
+    $usuario->setSenhaUsuario($_POST["cmpSenha"]);
+    $usuario->setRedeSocialUsuario($_POST["cmpRedeSocial"]);
+
+    //var_dump($usuario);
+
+    Usuario::insere($usuario);
 }
+
