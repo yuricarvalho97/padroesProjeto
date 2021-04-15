@@ -9,6 +9,16 @@
             <i class="fa fa-user-circle-o" aria-hidden="true"></i>
 
         </h3>
+        <?php
+        if (isset($_SESSION['mensagem'])) {
+        ?>
+            <div class="alert alert-success" role="alert">
+                <?= $_SESSION['mensagem'] ?>
+            </div>
+        <?php
+        }
+        unset($_SESSION['mensagem'])
+        ?>
         <hr>
         <div class="row">
             <div class="col-sm-12">
@@ -62,7 +72,8 @@
                     </div>
 
                     <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="cmpAdmin" name="cmpAdmin">
+                        <input type="hidden" name="cmpAdmin" value="0">
+                        <input type="checkbox" class="form-check-input" id="cmpAdmin" name="cmpAdmin" value="1">
                         <label class="form-check-label" for="cmpAdmin">Usuário admin</label>
                     </div>
                     <button type="submit" class="btn btn-success w-100" name="btnEnviarFormularioUsuario">

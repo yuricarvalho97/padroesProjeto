@@ -1,5 +1,8 @@
 <?php
 require __DIR__ . "/../autoload.php";
+
+//Iniciando a sessão
+session_start();
 ?>
 
 <!DOCTYPE html>

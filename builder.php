@@ -1,5 +1,7 @@
 <?php
-require './classes/Usuario.php';
+
+//Iniciando a sessão
+session_start();
 
 //arquivo de conexao
 require "autoload.php";
@@ -21,6 +23,7 @@ if (isset($_POST['btnEnviarFormularioUsuario'])) {
             if (!$instagram) {
                 Instagram::insere($redesocial->getNomeRedeSocial());
             }
+            $redesocial->setRedeSocialID($instagram[0]);
             break;
         case 'Facebook':
             require './classes/Facebook.php';
@@ -33,6 +36,7 @@ if (isset($_POST['btnEnviarFormularioUsuario'])) {
             if (!$facebook) {
                 Facebook::insere($redesocial->getNomeRedeSocial());
             }
+            $redesocial->setRedeSocialID($facebook[0]);
             break;
         case 'TipTop':
             require './classes/TipTop.php';
@@ -45,19 +49,26 @@ if (isset($_POST['btnEnviarFormularioUsuario'])) {
             if (!$tipTop) {
                 tipTop::insere($redesocial->getNomeRedeSocial());
             }
+            $redesocial->setRedeSocialID($tipTop[0]);
             break;
     }
-    $usuario = new Usuario;
 
+
+    //Cria o novo usuário e seta os atributos recebidos pelo formulário
+    $usuario = new Usuario;
     $usuario->setNomeUsuario($_POST["cmpNome"]);
     $usuario->setSobrenomeUsuario($_POST["cmpSobrenome"]);
     $usuario->setEmailUsuario($_POST["cmpEmail"]);
     $usuario->setTelefoneUsuario($_POST["cmpTelefone"]);
     $usuario->setSenhaUsuario($_POST["cmpSenha"]);
-    $usuario->setRedeSocialUsuario($_POST["cmpRedeSocial"]);
+    $usuario->setRedeSocialUsuario($redesocial->getRedeSocialID());
+    $usuario->setUsuarioAdmin($_POST["cmpAdmin"]);
+    $confirmacao = Usuario::insere($usuario);
 
-    //var_dump($usuario);
-
-    Usuario::insere($usuario);
+    if ($confirmacao) {
+        $_SESSION['mensagem'] = 'Erro ao cadastrar o usuário!';
+    } else {
+        $_SESSION['mensagem'] = 'Usuário cadastrado com sucesso!';
+    }
+    header('Location: index.php');
 }
-

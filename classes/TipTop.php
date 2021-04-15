@@ -15,6 +15,11 @@ class TipTop implements RedeSocial
     {
         return $this->redeSocialID;
     }
+    
+    public function setRedeSocialID($redeSocialID)
+    {
+        $this->redeSocialID = $redeSocialID;
+    }
 
     public function getNomeRedeSocial()
     {
@@ -52,11 +57,10 @@ class TipTop implements RedeSocial
     {
     }
 
-    public function criarUsuario($dadosUsuario, $redeSocialID)
+    public function criarUsuario(Usuario $u)
     {
-       $usuarioDao = new UsuarioDao();
-       $usuarioDao->insert($dadosUsuario, $redeSocialID);
-       
+        $usuarioDao = new UsuarioDao();
+        $usuarioDao->insert($u);
     }
 
     public function removerUsuario($codigoUsuario)

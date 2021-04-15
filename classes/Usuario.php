@@ -5,6 +5,7 @@ require_once __DIR__ . '/../Dao/UsuarioDao.php';
 
 class Usuario
 {
+    private $usuarioAdmin;
     private $nomeUsuario;
     private $sobrenomeUsuario;
     private $telefoneUsuario;
@@ -12,6 +13,15 @@ class Usuario
     private $senhaUsuario;
     private $redeSocialUsuario;
 
+
+    function getUsuarioAdmin()
+    {
+        return $this->usuarioAdmin;
+    }
+    function setUsuarioAdmin($usuarioAdmin)
+    {
+        $this->usuarioAdmin = $usuarioAdmin;
+    }
     function getNomeUsuario()
     {
         return $this->nomeUsuario;
@@ -75,7 +85,6 @@ class Usuario
     //Método para inserir usuário
     public static function insere(Usuario $u){
         $usuarioDao = new UsuarioDao;
-
         $usuarioDao->insert($u);
     }
 

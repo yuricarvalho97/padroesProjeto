@@ -55,10 +55,10 @@ class Facebook implements RedeSocial
     public function removerMensagem($codigoMensagem)
     {
     }
-    public function criarUsuario($dadosUsuario, $redeSocialID)
+    public function criarUsuario(Usuario $u)
     {
        $usuarioDao = new UsuarioDao();
-       $usuarioDao->insert($dadosUsuario, $redeSocialID);
+       $usuarioDao->insert($u);
        
     }
     public function removerUsuario($codigoUsuario)
