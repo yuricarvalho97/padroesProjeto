@@ -15,7 +15,7 @@ class Instagram implements RedeSocial
     {
         return $this->redeSocialID;
     }
-    
+
     public function setRedeSocialID($redeSocialID)
     {
         $this->redeSocialID = $redeSocialID;
@@ -36,8 +36,8 @@ class Instagram implements RedeSocial
     {
         $instagramDao = new InstagramDao;
 
-        $facebook = $instagramDao->load($nomeRedeSocial);
-        return $facebook;
+        $instagram = $instagramDao->load($nomeRedeSocial);
+        return $instagram;
     }
 
     //método responsável por inserir a rede social
@@ -58,9 +58,8 @@ class Instagram implements RedeSocial
 
     public function criarUsuario(Usuario $u)
     {
-       $usuarioDao = new UsuarioDao();
-       $usuarioDao->insert($u);
-       
+        $usuarioDao = new UsuarioDao();
+        $usuarioDao->insert($u);
     }
 
     public function removerUsuario($codigoUsuario)

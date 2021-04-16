@@ -82,8 +82,17 @@ class Usuario
         $this->redeSocialUsuario = $redeSocialUsuario;
     }
 
+
+    public static function find()
+    {
+        $usuarioDao = new UsuarioDao;
+
+        return $usuarioDao->load();
+    }
+
     //Método para inserir usuário
-    public static function insere(Usuario $u){
+    public static function insere(Usuario $u)
+    {
         $usuarioDao = new UsuarioDao;
         $usuarioDao->insert($u);
     }

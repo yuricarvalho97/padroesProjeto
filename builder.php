@@ -72,3 +72,22 @@ if (isset($_POST['btnEnviarFormularioUsuario'])) {
     }
     header('Location: index.php');
 }
+
+//CADASTRAR MENSAGEM 
+if (isset($_POST['enviarMensagem'])) {
+    require './classes/Mensagem.php';
+
+    $mensagem = new Mensagem;
+
+    $mensagem->setMensageiroIDFK($_POST['cmpMensageiro']);
+    $mensagem->setReceptorIDFK($_POST['cmpUsuarioReceptor']);
+    $mensagem->setConteudo($_POST['cmpMensagem']);
+    $confirmacao = Mensagem::insere($mensagem);
+
+    if ($confirmacao) {
+        $_SESSION['mensagem'] = 'Erro ao cadastrar a mensagem!';
+    } else {
+        $_SESSION['mensagem'] = 'Mensagem cadastrada com sucesso!';
+    }
+    header('Location: index.php');
+}

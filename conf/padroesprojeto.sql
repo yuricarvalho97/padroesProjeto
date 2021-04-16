@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 10-Abr-2021 às 21:33
+-- Generation Time: 16-Abr-2021 às 05:06
 -- Versão do servidor: 10.1.38-MariaDB
 -- versão do PHP: 7.3.2
 
@@ -34,6 +34,15 @@ CREATE TABLE `email_usuario` (
   `EnderecoEmail` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Extraindo dados da tabela `email_usuario`
+--
+
+INSERT INTO `email_usuario` (`EmailID`, `UsuarioIDFK`, `EnderecoEmail`) VALUES
+(1, 1, 'lucas@gmail.com'),
+(2, 2, 'glenda@gmail.com'),
+(3, 3, 'cristina@gmail.com');
+
 -- --------------------------------------------------------
 
 --
@@ -42,7 +51,8 @@ CREATE TABLE `email_usuario` (
 
 CREATE TABLE `mensagem` (
   `MensagemID` int(11) NOT NULL,
-  `UsuarioIDFK` int(11) NOT NULL,
+  `mensageiroIDFK` int(11) NOT NULL,
+  `ReceptorIDFK` int(11) NOT NULL,
   `Conteudo` varchar(255) NOT NULL,
   `created_at` date NOT NULL,
   `updated_at` date NOT NULL
@@ -59,6 +69,14 @@ CREATE TABLE `redesocial` (
   `NomeRedeSocial` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Extraindo dados da tabela `redesocial`
+--
+
+INSERT INTO `redesocial` (`RedeSocialID`, `NomeRedeSocial`) VALUES
+(9, 'Instagram'),
+(10, 'Facebook');
+
 -- --------------------------------------------------------
 
 --
@@ -70,6 +88,15 @@ CREATE TABLE `telefone_usuario` (
   `UsuarioIDFK` int(11) NOT NULL,
   `Numero` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `telefone_usuario`
+--
+
+INSERT INTO `telefone_usuario` (`TelefoneID`, `UsuarioIDFK`, `Numero`) VALUES
+(1, 1, '999999999'),
+(2, 2, '999999999'),
+(3, 3, '999999999');
 
 -- --------------------------------------------------------
 
@@ -89,6 +116,27 @@ CREATE TABLE `usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Extraindo dados da tabela `usuario`
+--
+
+INSERT INTO `usuario` (`UsuarioID`, `RedeSocialIDFK`, `Admin`, `Nome`, `SobreNome`, `Senha`, `Created_at`, `Updated_at`) VALUES
+(1, 9, 0, 'lucas', 'cardoso', '12312', '2021-04-14', NULL),
+(2, 9, 1, 'glenda', 'cardoso', '12312', '2021-04-14', NULL),
+(3, 9, 0, 'cristina', 'cardoso', '12312', '2021-04-14', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `usuario_mensagem`
+--
+
+CREATE TABLE `usuario_mensagem` (
+  `UsuarioMensagemID` int(11) NOT NULL,
+  `UsuarioIDFK` int(11) NOT NULL,
+  `MensagemIDFK` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
 -- Indexes for dumped tables
 --
 
@@ -104,7 +152,7 @@ ALTER TABLE `email_usuario`
 --
 ALTER TABLE `mensagem`
   ADD PRIMARY KEY (`MensagemID`),
-  ADD KEY `Mensagem_Usuario` (`UsuarioIDFK`);
+  ADD KEY `Mensagem_Usuario` (`ReceptorIDFK`);
 
 --
 -- Indexes for table `redesocial`
@@ -127,6 +175,14 @@ ALTER TABLE `usuario`
   ADD KEY `Usuario_RedeSocial` (`RedeSocialIDFK`);
 
 --
+-- Indexes for table `usuario_mensagem`
+--
+ALTER TABLE `usuario_mensagem`
+  ADD PRIMARY KEY (`UsuarioMensagemID`),
+  ADD KEY `usuario_mensagem` (`UsuarioIDFK`),
+  ADD KEY `mensagem_para_usuario` (`MensagemIDFK`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -134,31 +190,37 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT for table `email_usuario`
 --
 ALTER TABLE `email_usuario`
-  MODIFY `EmailID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `EmailID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `mensagem`
 --
 ALTER TABLE `mensagem`
-  MODIFY `MensagemID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `MensagemID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `redesocial`
 --
 ALTER TABLE `redesocial`
-  MODIFY `RedeSocialID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `RedeSocialID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `telefone_usuario`
 --
 ALTER TABLE `telefone_usuario`
-  MODIFY `TelefoneID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `TelefoneID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `UsuarioID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `UsuarioID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `usuario_mensagem`
+--
+ALTER TABLE `usuario_mensagem`
+  MODIFY `UsuarioMensagemID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -174,7 +236,7 @@ ALTER TABLE `email_usuario`
 -- Limitadores para a tabela `mensagem`
 --
 ALTER TABLE `mensagem`
-  ADD CONSTRAINT `Mensagem_Usuario` FOREIGN KEY (`UsuarioIDFK`) REFERENCES `usuario` (`UsuarioID`);
+  ADD CONSTRAINT `Mensagem_Usuario` FOREIGN KEY (`ReceptorIDFK`) REFERENCES `usuario` (`UsuarioID`);
 
 --
 -- Limitadores para a tabela `telefone_usuario`
@@ -187,6 +249,13 @@ ALTER TABLE `telefone_usuario`
 --
 ALTER TABLE `usuario`
   ADD CONSTRAINT `Usuario_RedeSocial` FOREIGN KEY (`RedeSocialIDFK`) REFERENCES `redesocial` (`RedeSocialID`);
+
+--
+-- Limitadores para a tabela `usuario_mensagem`
+--
+ALTER TABLE `usuario_mensagem`
+  ADD CONSTRAINT `mensagem_para_usuario` FOREIGN KEY (`MensagemIDFK`) REFERENCES `mensagem` (`MensagemID`),
+  ADD CONSTRAINT `usuario_mensagem` FOREIGN KEY (`UsuarioIDFK`) REFERENCES `usuario` (`UsuarioID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,9 +1,15 @@
 <?php
 require __DIR__ . "/../autoload.php";
+require __DIR__ . "/../classes/Usuario.php";
 
 //Iniciando a sessão
 session_start();
+
+$usuariosContas = Usuario::find();
+
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="pt-BR">

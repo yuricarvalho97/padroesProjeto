@@ -10,15 +10,15 @@
 
         </h3>
         <?php
-        if (isset($_SESSION['mensagem'])) {
-        ?>
+        if (isset($_SESSION['mensagem'])) { ?>
             <div class="alert alert-success" role="alert">
                 <?= $_SESSION['mensagem'] ?>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-        <?php
-        }
-        unset($_SESSION['mensagem'])
-        ?>
+        <?php }
+        unset($_SESSION['mensagem']) ?>
         <hr>
         <div class="row">
             <div class="col-sm-12">
@@ -92,57 +92,111 @@
             <i class="fa fa-users" aria-hidden="true"></i>
         </h3>
         <hr>
-        <div class="row">
-            <div class="col-sm-6 mb-1">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Nome do usuário</h4>
-                    </div>
+
+        <div class="accordion" id="accordionExample">
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#instagram" aria-expanded="true" aria-controls="collapseOne">
+                            Usuários Instagram
+                        </button>
+                    </h2>
+                </div>
+
+                <div id="instagram" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                     <div class="card-body">
-                        <div class="d-flex justify-content-center">
-                            <img class="imgUsuario" src="https://bulma.io/images/placeholders/128x128.png">
+
+                        <!-- USUÁRIO CARD -->
+                        <div class="row">
+                            <?php foreach ($usuariosContas as $contas) { ?>
+                                <div class="col-sm-4 mb-1">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4>Usuário(a) <?= $contas['Nome'] ?> </h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-center">
+                                                <img class="imgUsuario" src="https://bulma.io/images/placeholders/128x128.png">
+                                            </div>
+
+
+                                            <div class="row mt-5">
+                                                <div class="col-sm-6 mb-2">
+                                                    <button class="btn btn-primary w-100" data-toggle="modal" data-target="#msgEnviadas">
+                                                        Msg env
+                                                        <i class="fa fa-list" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="col-sm-6 mb-2">
+                                                    <button class="btn btn-primary w-100" data-toggle="modal" data-target="#msgRecebidas">
+                                                        Msg rece.
+                                                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <hr>
+                                            <h4 class="text-center">Enviar nova mensagem</h4>
+
+                                            <form action="builder.php" method="post">
+                                                <input type="hidden" name="cmpMensageiro" value="<?= $contas['UsuarioID'] ?>">
+                                                <label for="cmpUsuario">Usuários</label>
+                                                <select class="custom-select mb-3" id="cmpUsuarioReceptor" name="cmpUsuarioReceptor" required>
+                                                    <option selected disabled>Escolha um usuário</option>
+                                                    <?php
+                                                    foreach ($usuariosContas as $key => $opcaoUsuarios) {
+                                                        if ($usuariosContas[$key]['Nome'] != $contas['Nome'])
+                                                            echo "<option value=" . $opcaoUsuarios['UsuarioID'] . ">" . $opcaoUsuarios['Nome'] . "</option>";
+                                                    }
+                                                    ?>
+                                                </select>
+
+                                                <div class="form-group">
+                                                    <label for="cmpMensagem">Conteúdo da mensagem</label>
+                                                    <textarea class="form-control" id="cmpMensagem" name="cmpMensagem" rows="3" required></textarea>
+                                                </div>
+
+                                                <button type="submit" class="btn btn-success w-100" name="enviarMensagem">
+                                                    Enviar mensagem
+                                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
                         </div>
-
-
-                        <div class="row mt-5">
-                            <div class="col-sm-6 mb-2">
-                                <button class="btn btn-primary w-100" data-toggle="modal" data-target="#msgEnviadas">
-                                    Msg enviadas
-                                    <i class="fa fa-list" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                            <div class="col-sm-6 mb-2">
-                                <button class="btn btn-primary w-100" data-toggle="modal" data-target="#msgRecebidas">
-                                    Msg recebidas
-                                    <i class="fa fa-info-circle" aria-hidden="true"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                        <hr>
-                        <h4 class="text-center">Enviar nova mensagem</h4>
-
-                        <form action="" method="post">
-                            <label for="cmpUsuario">Usuários</label>
-                            <select class="custom-select mb-3" id="cmpUsuario" name="cmpUsuario" required>
-                                <option selected disabled value="">Escolha um usuário</option>
-                                <option>...</option>
-                            </select>
-
-                            <div class="form-group">
-                                <label for="cmpMensagem">Conteúdo da mensagem</label>
-                                <textarea class="form-control" id="cmpMensagem" name="cmpMensagem" rows="3"></textarea>
-                            </div>
-
-                            <button type="submit" class="btn btn-success w-100">
-                                Enviar mensagem
-                                <i class="fa fa-check" aria-hidden="true"></i>
-                            </button>
-                        </form>
                     </div>
                 </div>
             </div>
-
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#facebook" aria-expanded="false" aria-controls="collapseTwo">
+                            Usuários Facebook
+                        </button>
+                    </h2>
+                </div>
+                <div id="facebook" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                    <div class="card-body">
+                        Some placeholder content for the second accordion panel. This panel is hidden by default.
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingThree">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#tipTop" aria-expanded="false" aria-controls="collapseThree">
+                            Usuários TipTop
+                        </button>
+                    </h2>
+                </div>
+                <div id="tipTop" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                    <div class="card-body">
+                        And lastly, the placeholder content for the third and final accordion panel. This panel is hidden by default.
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

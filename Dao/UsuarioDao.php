@@ -2,7 +2,19 @@
 //Conexão
 include __DIR__ . '/../autoload.php';
 
-class UsuarioDao{
+class UsuarioDao
+{
+
+    function load()
+    {
+        global $conn;
+
+        $sql = "SELECT * FROM padroesprojeto.usuario";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
 
     function insert(Usuario $u)
     {
@@ -33,6 +45,5 @@ class UsuarioDao{
         $stmt->bindValue(1, $usuarioID);
         $stmt->bindValue(2, $u->getEmailUsuario());
         return $stmt->execute();
-
     }
 }
