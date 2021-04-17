@@ -6,5 +6,6 @@
 ### Alunos: Lucas Cardoso, Yuri Carvalho
 
 ### Diagrama Entidade Relacionamento
-![Entidade Relacionamento](https://user-images.githubusercontent.com/75703602/114479205-697c6a00-9bd6-11eb-83f2-e4115fec23cc.png)
+![Entidade Relacionamento](https://user-images.githubusercontent.com/75703602/115120855-fd0ebb80-9f85-11eb-976b-dc2b1195c69c.png)
+
 
