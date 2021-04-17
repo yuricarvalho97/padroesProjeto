@@ -90,13 +90,6 @@ class Usuario
         return $usuarioDao->load();
     }
 
-    //Método para inserir usuário
-    public static function insere(Usuario $u)
-    {
-        $usuarioDao = new UsuarioDao;
-        $usuarioDao->insert($u);
-    }
-
     public static function findRedeSocial($RedeSocialID)
     {
         $usuarioDao = new UsuarioDao;

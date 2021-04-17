@@ -67,10 +67,10 @@ class Facebook implements RedeSocial
         return $FacebookDao->deleteMensagem($codigoMensagem);
     }
 
-    public function criarUsuario(Usuario $u)
+    public static function criarUsuario(Usuario $u)
     {
-        $usuarioDao = new UsuarioDao();
-        $usuarioDao->insert($u);
+        $facebookDao = new FacebookDao;
+        $facebookDao->insertUsuario($u);
     }
 
     public static function removerUsuario($codigoUsuario)

@@ -66,10 +66,10 @@ class Instagram implements RedeSocial
     {
     }
 
-    public function criarUsuario(Usuario $u)
+    public static function criarUsuario(Usuario $u)
     {
-        $usuarioDao = new UsuarioDao();
-        $usuarioDao->insert($u);
+        $instagramDao = new InstagramDao();
+        $instagramDao->insertUsuario($u);
     }
 
     public static function removerUsuario($codigoUsuario)

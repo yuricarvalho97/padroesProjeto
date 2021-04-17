@@ -38,11 +38,6 @@ CREATE TABLE `email_usuario` (
 -- Extraindo dados da tabela `email_usuario`
 --
 
-INSERT INTO `email_usuario` (`EmailID`, `UsuarioIDFK`, `EnderecoEmail`) VALUES
-(1, 1, 'lucas@gmail.com'),
-(2, 2, 'glenda@gmail.com'),
-(3, 3, 'cristina@gmail.com');
-
 -- --------------------------------------------------------
 
 --
@@ -73,10 +68,6 @@ CREATE TABLE `redesocial` (
 -- Extraindo dados da tabela `redesocial`
 --
 
-INSERT INTO `redesocial` (`RedeSocialID`, `NomeRedeSocial`) VALUES
-(9, 'Instagram'),
-(10, 'Facebook');
-
 -- --------------------------------------------------------
 
 --
@@ -92,11 +83,6 @@ CREATE TABLE `telefone_usuario` (
 --
 -- Extraindo dados da tabela `telefone_usuario`
 --
-
-INSERT INTO `telefone_usuario` (`TelefoneID`, `UsuarioIDFK`, `Numero`) VALUES
-(1, 1, '999999999'),
-(2, 2, '999999999'),
-(3, 3, '999999999');
 
 -- --------------------------------------------------------
 
@@ -118,11 +104,6 @@ CREATE TABLE `usuario` (
 --
 -- Extraindo dados da tabela `usuario`
 --
-
-INSERT INTO `usuario` (`UsuarioID`, `RedeSocialIDFK`, `Admin`, `Nome`, `SobreNome`, `Senha`, `Created_at`, `Updated_at`) VALUES
-(1, 9, 0, 'lucas', 'cardoso', '12312', '2021-04-14', NULL),
-(2, 9, 1, 'glenda', 'cardoso', '12312', '2021-04-14', NULL),
-(3, 9, 0, 'cristina', 'cardoso', '12312', '2021-04-14', NULL);
 
 -- --------------------------------------------------------
 

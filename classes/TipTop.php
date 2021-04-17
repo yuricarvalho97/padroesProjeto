@@ -66,10 +66,10 @@ class TipTop implements RedeSocial
         return $TipTopDao->deleteMensagem($codigoMensagem);
     }
 
-    public function criarUsuario(Usuario $u)
+    public static function criarUsuario(Usuario $u)
     {
-        $usuarioDao = new UsuarioDao();
-        $usuarioDao->insert($u);
+        $tipTopDao = new TipTopDao();
+        $tipTopDao->insertUsuario($u);
     }
 
     public static function removerUsuario($codigoUsuario)

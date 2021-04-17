@@ -23,7 +23,6 @@ if (isset($_POST['btnEnviarFormularioUsuario'])) {
             if (!$instagram) {
                 Instagram::insere($redesocial->getNomeRedeSocial());
             }
-            $redesocial->setRedeSocialID($instagram[0]);
             break;
         case 'Facebook':
             require './classes/Facebook.php';
@@ -36,7 +35,6 @@ if (isset($_POST['btnEnviarFormularioUsuario'])) {
             if (!$facebook) {
                 Facebook::insere($redesocial->getNomeRedeSocial());
             }
-            $redesocial->setRedeSocialID($facebook[0]);
             break;
         case 'TipTop':
             require './classes/TipTop.php';
@@ -49,22 +47,39 @@ if (isset($_POST['btnEnviarFormularioUsuario'])) {
             if (!$tipTop) {
                 tipTop::insere($redesocial->getNomeRedeSocial());
             }
-            $redesocial->setRedeSocialID($tipTop[0]);
             break;
     }
 
-
-    //Cria o novo usuário e seta os atributos recebidos pelo formulário
+    //CADASTRAR USUÁRIO
+    //Cria o usuário e seta os atributos recebidos do formulário
     $usuario = new Usuario;
     $usuario->setNomeUsuario($_POST["cmpNome"]);
     $usuario->setSobrenomeUsuario($_POST["cmpSobrenome"]);
     $usuario->setEmailUsuario($_POST["cmpEmail"]);
     $usuario->setTelefoneUsuario($_POST["cmpTelefone"]);
     $usuario->setSenhaUsuario($_POST["cmpSenha"]);
-    $usuario->setRedeSocialUsuario($redesocial->getRedeSocialID());
     $usuario->setUsuarioAdmin($_POST["cmpAdmin"]);
-    $confirmacao = Usuario::insere($usuario);
 
+    //Insere o usuário na rede social selecionada
+    switch ($_POST["cmpRedeSocial"]) {
+        case 'Instagram':
+            $redesocial = Instagram::find($_POST["cmpRedeSocial"]);
+            $usuario->setRedeSocialUsuario($redesocial[0]);
+            $confirmacao = Instagram::criarUsuario($usuario);
+            break;
+        case 'Facebook':
+            $redesocial = Facebook::find($_POST["cmpRedeSocial"]);
+            $usuario->setRedeSocialUsuario($redesocial[0]);
+            $confirmacao = Facebook::criarUsuario($usuario);
+            break;
+        case 'TipTop':
+            $redesocial = TipTop::find($_POST["cmpRedeSocial"]);
+            $usuario->setRedeSocialUsuario($redesocial[0]);
+            $confirmacao = TipTop::criarUsuario($usuario);
+            break;
+    }
+
+    //Cria aviso de confirmação do cadastro
     if ($confirmacao) {
         $_SESSION['mensagem'] = 'Erro ao cadastrar o usuário!';
     } else {
