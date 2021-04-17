@@ -105,10 +105,88 @@
 
                 <div id="instagram" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                     <div class="card-body">
-
                         <!-- USUÁRIO CARD -->
                         <div class="row">
-                            <?php foreach ($usuariosContas as $contas) { ?>
+                            <?php
+                            foreach ($usuariosContas as $contas) {
+                                if ($contas['RedeSocialIDFK'] == $i[0]) {
+                            ?>
+                                    <div class="col-sm-4 mb-1">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h4>Usuário(a) <?= $contas['Nome'] ?> </h4>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-center">
+                                                    <img class="imgUsuario" src="https://bulma.io/images/placeholders/128x128.png">
+                                                </div>
+
+                                                <div class="row mt-5">
+                                                    <div class="col-sm-6 mb-2">
+                                                        <button class="btn btn-primary w-100" data-toggle="modal" data-target="#msgEnviadas<?= $contas['UsuarioID'] ?>">
+                                                            Msg env
+                                                            <i class="fa fa-list" aria-hidden="true"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-sm-6 mb-2">
+                                                        <button class="btn btn-primary w-100" data-toggle="modal" data-target="#msgRecebidas<?= $contas['UsuarioID'] ?>">
+                                                            Msg rece.
+                                                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                <hr>
+                                                <h4 class="text-center">Enviar nova mensagem</h4>
+
+                                                <form action="builder.php" method="post">
+                                                    <input type="hidden" name="cmpMensageiro" value="<?= $contas['UsuarioID'] ?>">
+                                                    <label for="cmpUsuario">Usuários</label>
+                                                    <select class="custom-select mb-3" id="cmpUsuarioReceptor" name="cmpUsuarioReceptor" required>
+                                                        <option selected disabled>Escolha um usuário</option>
+                                                        <?php
+                                                        foreach ($usuariosContas as $key => $opcaoUsuarios) {
+                                                            if ($usuariosContas[$key]['Nome'] != $contas['Nome'])
+                                                                echo "<option value=" . $opcaoUsuarios['UsuarioID'] . ">" . $opcaoUsuarios['Nome'] . "</option>";
+                                                        }
+                                                        ?>
+                                                    </select>
+
+                                                    <div class="form-group">
+                                                        <label for="cmpMensagem">Conteúdo da mensagem</label>
+                                                        <textarea class="form-control" id="cmpMensagem" name="cmpMensagem" rows="3" required></textarea>
+                                                    </div>
+
+                                                    <button type="submit" class="btn btn-success w-100" name="enviarMensagem">
+                                                        Enviar mensagem
+                                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                            <?php
+                                }
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#facebook" aria-expanded="false" aria-controls="collapseTwo">
+                            Usuários Facebook
+                        </button>
+                    </h2>
+                </div>
+                <div id="facebook" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <?php
+                        foreach ($usuariosContas as $contas) {
+                            if ($contas['RedeSocialIDFK'] == $f[0]) {
+                        ?>
                                 <div class="col-sm-4 mb-1">
                                     <div class="card">
                                         <div class="card-header">
@@ -119,16 +197,15 @@
                                                 <img class="imgUsuario" src="https://bulma.io/images/placeholders/128x128.png">
                                             </div>
 
-
                                             <div class="row mt-5">
                                                 <div class="col-sm-6 mb-2">
-                                                    <button class="btn btn-primary w-100" data-toggle="modal" data-target="#msgEnviadas">
+                                                    <button class="btn btn-primary w-100" data-toggle="modal" data-target="#msgEnviadas<?= $contas['UsuarioID'] ?>">
                                                         Msg env
                                                         <i class="fa fa-list" aria-hidden="true"></i>
                                                     </button>
                                                 </div>
                                                 <div class="col-sm-6 mb-2">
-                                                    <button class="btn btn-primary w-100" data-toggle="modal" data-target="#msgRecebidas">
+                                                    <button class="btn btn-primary w-100" data-toggle="modal" data-target="#msgRecebidas<?= $contas['UsuarioID'] ?>">
                                                         Msg rece.
                                                         <i class="fa fa-info-circle" aria-hidden="true"></i>
                                                     </button>
@@ -164,22 +241,10 @@
                                         </div>
                                     </div>
                                 </div>
-                            <?php } ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header" id="headingTwo">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#facebook" aria-expanded="false" aria-controls="collapseTwo">
-                            Usuários Facebook
-                        </button>
-                    </h2>
-                </div>
-                <div id="facebook" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                    <div class="card-body">
-                        Some placeholder content for the second accordion panel. This panel is hidden by default.
+                        <?php
+                            }
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
@@ -193,7 +258,69 @@
                 </div>
                 <div id="tipTop" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                     <div class="card-body">
-                        And lastly, the placeholder content for the third and final accordion panel. This panel is hidden by default.
+                        <?php
+                        if (count($usuariosContas) > 0) {
+                            foreach ($usuariosContas as $contas) {
+                                if ($contas['RedeSocialIDFK'] == $t[0]) {
+                        ?>
+                                    <div class="col-sm-4 mb-1">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h4>Usuário(a) <?= $contas['Nome'] ?> </h4>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-center">
+                                                    <img class="imgUsuario" src="https://bulma.io/images/placeholders/128x128.png">
+                                                </div>
+
+                                                <div class="row mt-5">
+                                                    <div class="col-sm-6 mb-2">
+                                                        <button class="btn btn-primary w-100" data-toggle="modal" data-target="#msgEnviadas<?= $contas['UsuarioID'] ?>">
+                                                            Msg env
+                                                            <i class="fa fa-list" aria-hidden="true"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-sm-6 mb-2">
+                                                        <button class="btn btn-primary w-100" data-toggle="modal" data-target="#msgRecebidas<?= $contas['UsuarioID'] ?>">
+                                                            Msg rece.
+                                                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                <hr>
+                                                <h4 class="text-center">Enviar nova mensagem</h4>
+
+                                                <form action="builder.php" method="post">
+                                                    <input type="hidden" name="cmpMensageiro" value="<?= $contas['UsuarioID'] ?>">
+                                                    <label for="cmpUsuario">Usuários</label>
+                                                    <select class="custom-select mb-3" id="cmpUsuarioReceptor" name="cmpUsuarioReceptor" required>
+                                                        <option selected disabled>Escolha um usuário</option>
+                                                        <?php
+                                                        foreach ($usuariosContas as $key => $opcaoUsuarios) {
+                                                            if ($usuariosContas[$key]['Nome'] != $contas['Nome'])
+                                                                echo "<option value=" . $opcaoUsuarios['UsuarioID'] . ">" . $opcaoUsuarios['Nome'] . "</option>";
+                                                        }
+                                                        ?>
+                                                    </select>
+
+                                                    <div class="form-group">
+                                                        <label for="cmpMensagem">Conteúdo da mensagem</label>
+                                                        <textarea class="form-control" id="cmpMensagem" name="cmpMensagem" rows="3" required></textarea>
+                                                    </div>
+
+                                                    <button type="submit" class="btn btn-success w-100" name="enviarMensagem">
+                                                        Enviar mensagem
+                                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                        <?php
+                                }
+                            }
+                        } ?>
                     </div>
                 </div>
             </div>
@@ -201,45 +328,61 @@
     </div>
 
     <!-- MODAL MENSAGENS ENVIADAS -->
-    <div class="modal fade" id="msgEnviadas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Mensagens enviadas</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <?php foreach ($usuariosContas as $contas) { ?>
+        <div class="modal fade" id="msgEnviadas<?= $contas['UsuarioID'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Mensagens enviadas</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="list-group">
+                            <?php foreach ($mensagens as $mensagem) {
+                                if ($mensagem['mensageiroIDFK'] == $contas['UsuarioID']) {
+                                    echo '<li class="list-group-item">Conteúdo: ' . $mensagem['Conteudo'] . '</li>';
+                                }
+                            } ?>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    <?php } ?>
 
     <!-- MODAL MENSAGENS RECEBIDAS -->
-    <div class="modal fade" id="msgRecebidas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Mensagens recebidas</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <?php foreach ($usuariosContas as $contas) { ?>
+        <div class="modal fade" id="msgRecebidas<?= $contas['UsuarioID'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Mensagens recebidas</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="list-group">
+                            <?php foreach ($mensagens as $mensagem) {
+                                if ($mensagem['ReceptorIDFK'] == $contas['UsuarioID']) {
+                                    echo '<li class="list-group-item">' . $mensagem['Conteudo'] . '</li>';
+                                }
+                            } ?>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
+    <?php } ?>
 
 </div>
 

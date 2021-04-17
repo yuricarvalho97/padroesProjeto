@@ -51,11 +51,11 @@ class Mensagem
         $this->Conteudo = $Conteudo;
     }
 
-    public static function find($MensagemID)
+    public static function find()
     {
         $MensagemDao = new MensagemDao;
 
-        $mensagem = $MensagemDao->load($MensagemID);
+        $mensagem = $MensagemDao->load();
         return $mensagem;
     }
 
@@ -63,6 +63,6 @@ class Mensagem
     {
         $MensagemDao = new MensagemDao;
 
-        $MensagemDao->insert($m);
+        return $MensagemDao->insert($m);
     }
 }

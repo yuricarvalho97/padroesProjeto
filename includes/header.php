@@ -1,11 +1,28 @@
 <?php
 require __DIR__ . "/../autoload.php";
 require __DIR__ . "/../classes/Usuario.php";
+require __DIR__ . "/../classes/Mensagem.php";
+require __DIR__ . "/../classes/Instagram.php";
+require __DIR__ . "/../classes/Facebook.php";
+require __DIR__ . "/../classes/TipTop.php";
 
 //Iniciando a sessão
 session_start();
 
 $usuariosContas = Usuario::find();
+$mensagens = Mensagem::find();
+
+$instagram = new Instagram;
+$instagram->setNomeRedeSocial('Instagram');
+$i = Instagram::find($instagram->getNomeRedeSocial());
+
+$facebook = new Facebook;
+$facebook->setNomeRedeSocial('Facebook');
+$f = Facebook::find($facebook->getNomeRedeSocial());
+
+$tipTop = new TipTop;
+$tipTop->setNomeRedeSocial('TipTop');
+$t = Facebook::find($tipTop->getNomeRedeSocial());
 
 ?>
 

@@ -76,18 +76,30 @@ if (isset($_POST['btnEnviarFormularioUsuario'])) {
 //CADASTRAR MENSAGEM 
 if (isset($_POST['enviarMensagem'])) {
     require './classes/Mensagem.php';
+    require './classes/Usuario_Mensagem.php';
 
+    //cadastrando mensagem
     $mensagem = new Mensagem;
 
     $mensagem->setMensageiroIDFK($_POST['cmpMensageiro']);
     $mensagem->setReceptorIDFK($_POST['cmpUsuarioReceptor']);
     $mensagem->setConteudo($_POST['cmpMensagem']);
-    $confirmacao = Mensagem::insere($mensagem);
+    $mensagemID = Mensagem::insere($mensagem);
+
+    $mensagem->setMensagemID($mensagemID);
+
+    //cadastrando Cadastrando mensagem_Usuario
+    $usuarioMensagem = new Usuario_Mensagem;
+
+    $usuarioMensagem->setUsuarioIDFK($mensagem->getMensageiroIDFK());
+    $usuarioMensagem->setMensagemIFDK($mensagem->getMensagemID());
+
+    $confirmacao = Usuario_Mensagem::insere($usuarioMensagem);
 
     if ($confirmacao) {
-        $_SESSION['mensagem'] = 'Erro ao cadastrar a mensagem!';
-    } else {
         $_SESSION['mensagem'] = 'Mensagem cadastrada com sucesso!';
+    } else {
+        $_SESSION['mensagem'] = 'Erro ao cadastrar a mensagem!';
     }
     header('Location: index.php');
 }

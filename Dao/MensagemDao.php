@@ -26,7 +26,8 @@ class MensagemDao
         $stmt->bindValue(1, $m->getMensageiroIDFK());
         $stmt->bindValue(2, $m->getReceptorIDFK());
         $stmt->bindValue(3, $m->getConteudo());
+        $stmt->execute();
 
-        return $stmt->execute();
+        return $conn->lastInsertId();
     }
 }
