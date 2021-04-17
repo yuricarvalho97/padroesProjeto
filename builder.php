@@ -77,14 +77,30 @@ if (isset($_POST['btnEnviarFormularioUsuario'])) {
 if (isset($_POST['enviarMensagem'])) {
     require './classes/Mensagem.php';
     require './classes/Usuario_Mensagem.php';
+    $redesocial = '';
 
     //cadastrando mensagem
     $mensagem = new Mensagem;
-
     $mensagem->setMensageiroIDFK($_POST['cmpMensageiro']);
     $mensagem->setReceptorIDFK($_POST['cmpUsuarioReceptor']);
     $mensagem->setConteudo($_POST['cmpMensagem']);
-    $mensagemID = Mensagem::insere($mensagem);
+
+    switch ($_POST['cmpRedeSocialID']) {
+        case 'Instagram':
+            require './classes/Instagram.php';
+            $redesocial = new Instagram;
+            break;
+        case 'Facebook':
+            require './classes/Facebook.php';
+            $redesocial = new Facebook;
+            break;
+        case 'TipTop':
+            require './classes/TipTop.php';
+            $redesocial = new tipTop;
+            break;
+    }
+
+    $mensagemID = $redesocial::insereMensagem($mensagem);
 
     $mensagem->setMensagemID($mensagemID);
 
@@ -101,5 +117,66 @@ if (isset($_POST['enviarMensagem'])) {
     } else {
         $_SESSION['mensagem'] = 'Erro ao cadastrar a mensagem!';
     }
+    header('Location: index.php');
+}
+
+//DELETAR MENSAGEM
+if (isset($_POST['btnDeletarMensagem'])) {
+
+    $nomeRedesocial = Usuario::findRedeSocial($_POST['cmpRedeSocialID']);
+
+    switch ($nomeRedesocial[1]) {
+        case 'Instagram':
+            require './classes/Instagram.php';
+            $redesocial = new Instagram;
+            break;
+        case 'Facebook':
+            require './classes/Facebook.php';
+            $redesocial = new Facebook;
+            break;
+        case 'TipTop':
+            require './classes/TipTop.php';
+            $redesocial = new tipTop;
+            break;
+    }
+
+    $confirmacao = $redesocial::removerMensagem($_POST['cmpMensagemDeletarID']);
+
+    if ($confirmacao) {
+        $_SESSION['mensagem'] = 'Mensagem deletada com sucesso!';
+    } else {
+        $_SESSION['mensagem'] = 'Erro ao deletar a mensagem!';
+    }
+
+    header('Location: index.php');
+}
+
+//DELETAR USUÁRIO
+if (isset($_POST['btnDeletarUsuario'])) {
+    $nomeRedesocial = Usuario::findRedeSocial($_POST['cmpRedeSocialID']);
+
+    switch ($nomeRedesocial[1]) {
+        case 'Instagram':
+            require './classes/Instagram.php';
+            $redesocial = new Instagram;
+            break;
+        case 'Facebook':
+            require './classes/Facebook.php';
+            $redesocial = new Facebook;
+            break;
+        case 'TipTop':
+            require './classes/TipTop.php';
+            $redesocial = new tipTop;
+            break;
+    }
+
+    $confirmacao = $redesocial::removerUsuario($_POST['cmpUsuarioID']);
+
+    if ($confirmacao) {
+        $_SESSION['mensagem'] = 'Usuário deletado com sucesso!';
+    } else {
+        $_SESSION['mensagem'] = 'Erro ao deletar o usuário!';
+    }
+
     header('Location: index.php');
 }

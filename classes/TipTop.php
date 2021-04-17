@@ -15,7 +15,7 @@ class TipTop implements RedeSocial
     {
         return $this->redeSocialID;
     }
-    
+
     public function setRedeSocialID($redeSocialID)
     {
         $this->redeSocialID = $redeSocialID;
@@ -48,13 +48,22 @@ class TipTop implements RedeSocial
         $tipTopDao->insert($nomeRedeSocial);
     }
 
+    public static function insereMensagem(Mensagem $mensagem)
+    {
+        $TipTopDao = new TipTopDao;
+
+        return $TipTopDao->insertMensagem($mensagem);
+    }
 
     public function enviarMensagemUsuario($mensagem)
     {
     }
 
-    public function removerMensagem($codigoMensagem)
+    public static function removerMensagem($codigoMensagem)
     {
+        $TipTopDao = new TipTopDao;
+
+        return $TipTopDao->deleteMensagem($codigoMensagem);
     }
 
     public function criarUsuario(Usuario $u)
@@ -63,7 +72,10 @@ class TipTop implements RedeSocial
         $usuarioDao->insert($u);
     }
 
-    public function removerUsuario($codigoUsuario)
+    public static function removerUsuario($codigoUsuario)
     {
+        $TipTopDao = new TipTopDao;
+
+        return $TipTopDao->removeUsuario($codigoUsuario);
     }
 }

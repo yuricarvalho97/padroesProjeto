@@ -85,7 +85,7 @@
         </div>
     </div>
 
-    <!-- ENVIAR MENSAGEM PARA OUTROS USUÁRIOS -->
+    <!-- ENVIAR MENSAGEM PARA OUTROS USUÁRIOS E DELETAR (ADMIN) -->
     <div class="shadow p-3 mb-5 mt-4 bg-white rounded">
         <h3>
             Usuários
@@ -94,6 +94,7 @@
         <hr>
 
         <div class="accordion" id="accordionExample">
+            <!-- INSTAGRAM -->
             <div class="card">
                 <div class="card-header" id="headingOne">
                     <h2 class="mb-0">
@@ -122,17 +123,56 @@
                                                 </div>
 
                                                 <div class="row mt-5">
-                                                    <div class="col-sm-6 mb-2">
+                                                    <div class="col-sm-4 mb-2">
                                                         <button class="btn btn-primary w-100" data-toggle="modal" data-target="#msgEnviadas<?= $contas['UsuarioID'] ?>">
-                                                            Msg env
                                                             <i class="fa fa-list" aria-hidden="true"></i>
                                                         </button>
                                                     </div>
-                                                    <div class="col-sm-6 mb-2">
+                                                    <div class="col-sm-4 mb-2">
                                                         <button class="btn btn-primary w-100" data-toggle="modal" data-target="#msgRecebidas<?= $contas['UsuarioID'] ?>">
-                                                            Msg rece.
                                                             <i class="fa fa-info-circle" aria-hidden="true"></i>
                                                         </button>
+
+                                                    </div>
+                                                    <?php if ($contas['Admin'] == 1) { ?>
+                                                        <div class="col-sm-4 mb-2">
+                                                            <button class="btn btn-danger w-100" type="button" data-toggle="collapse" data-target="#deletarUsuarioInstagram" aria-expanded="false" aria-controls="collapseExample">
+                                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                                            </button>
+                                                        </div>
+                                                    <?php } ?>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+
+                                                        <?php if ($contas['Admin'] == 1) { ?>
+                                                            <div class="collapse" id="deletarUsuarioInstagram">
+                                                                <div class="card card-body">
+                                                                    <form action="builder.php" method="post">
+                                                                        <input type="hidden" name="cmpRedeSocialID" value="<?= $contas['RedeSocialIDFK'] ?>">
+                                                                        <select class="custom-select mb-3" name="cmpUsuarioID" required>
+                                                                            <option selected disabled>Escolha um usuário</option>
+                                                                            <?php
+                                                                            foreach ($usuariosContas as $key => $opcaoUsuarios) {
+                                                                                if ($usuariosContas[$key]['Nome'] != $contas['Nome']) {
+                                                                                    if ($opcaoUsuarios['RedeSocialIDFK'] == $contas['RedeSocialIDFK']) {
+                                                                                        echo "<option value=" . $opcaoUsuarios['UsuarioID'] . ">" . $opcaoUsuarios['Nome'] . "</option>";
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                            ?>
+                                                                        </select>
+
+                                                                        <button type="submit" class="btn btn-danger w-100" name="btnDeletarUsuario">
+                                                                            Confirmar
+                                                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        <?php } ?>
+
                                                     </div>
                                                 </div>
 
@@ -140,14 +180,142 @@
                                                 <h4 class="text-center">Enviar nova mensagem</h4>
 
                                                 <form action="builder.php" method="post">
+                                                    <input type="hidden" name="cmpRedeSocialID" value="Instagram">
                                                     <input type="hidden" name="cmpMensageiro" value="<?= $contas['UsuarioID'] ?>">
                                                     <label for="cmpUsuario">Usuários</label>
                                                     <select class="custom-select mb-3" id="cmpUsuarioReceptor" name="cmpUsuarioReceptor" required>
                                                         <option selected disabled>Escolha um usuário</option>
                                                         <?php
                                                         foreach ($usuariosContas as $key => $opcaoUsuarios) {
-                                                            if ($usuariosContas[$key]['Nome'] != $contas['Nome'])
-                                                                echo "<option value=" . $opcaoUsuarios['UsuarioID'] . ">" . $opcaoUsuarios['Nome'] . "</option>";
+                                                            if ($usuariosContas[$key]['Nome'] != $contas['Nome']) {
+                                                                if ($opcaoUsuarios['RedeSocialIDFK'] == $i[0]) {
+                                                                    echo "<option value=" . $opcaoUsuarios['UsuarioID'] . ">" . $opcaoUsuarios['Nome'] . "</option>";
+                                                                }
+                                                            }
+                                                        }
+                                                        ?>
+                                                    </select>
+
+                                                    <div class="form-group">
+                                                        <label for="cmpMensagem">Conteúdo da mensagem</label>
+                                                        <textarea class="form-control" id="cmpMensagem" name="cmpMensagem" rows="3" required></textarea>
+                                                    </div>
+
+                                                    <button type="submit" class="btn btn-success w-100" name="enviarMensagem">
+                                                        Enviar mensagem
+                                                        <i class="fa fa-check" aria-hidden="true"></i>
+                                                    </button>
+                                                </form>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                            <?php
+                                }
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FACEBOOK-->
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#facebook" aria-expanded="false" aria-controls="collapseTwo">
+                            Usuários Facebook
+                        </button>
+                    </h2>
+                </div>
+                <div id="facebook" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <div class="row">
+                            <?php
+                            foreach ($usuariosContas as $contas) {
+                                if ($contas['RedeSocialIDFK'] == $f[0]) {
+                            ?>
+                                    <div class="col-sm-4 mb-1">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h4>Usuário(a) <?= $contas['Nome'] ?> </h4>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-center">
+                                                    <img class="imgUsuario" src="https://bulma.io/images/placeholders/128x128.png">
+                                                </div>
+
+                                                <div class="row mt-5">
+                                                    <div class="col-sm-4 mb-2">
+                                                        <button class="btn btn-primary w-100" data-toggle="modal" data-target="#msgEnviadas<?= $contas['UsuarioID'] ?>">
+                                                            <i class="fa fa-list" aria-hidden="true"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-sm-4 mb-2">
+                                                        <button class="btn btn-primary w-100" data-toggle="modal" data-target="#msgRecebidas<?= $contas['UsuarioID'] ?>">
+                                                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                                        </button>
+                                                    </div>
+
+                                                    <?php if ($contas['Admin'] == 1) { ?>
+                                                        <div class="col-sm-4 mb-2">
+                                                            <button class="btn btn-danger w-100" type="button" data-toggle="collapse" data-target="#deletarUsuarioFacebook" aria-expanded="false" aria-controls="collapseExample">
+                                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                                            </button>
+                                                        </div>
+                                                    <?php } ?>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <?php if ($contas['Admin'] == 1) { ?>
+                                                            <div class="collapse" id="deletarUsuarioFacebook">
+                                                                <div class="card card-body">
+                                                                    <form action="builder.php" method="post">
+                                                                        <input type="hidden" name="cmpRedeSocialID" value="<?= $contas['RedeSocialIDFK'] ?>">
+                                                                        <select class="custom-select mb-3" name="cmpUsuarioID" required>
+                                                                            <option selected disabled>Escolha um usuário</option>
+                                                                            <?php
+                                                                            foreach ($usuariosContas as $key => $opcaoUsuarios) {
+                                                                                if ($usuariosContas[$key]['Nome'] != $contas['Nome']) {
+                                                                                    if ($opcaoUsuarios['RedeSocialIDFK'] == $contas['RedeSocialIDFK']) {
+                                                                                        echo "<option value=" . $opcaoUsuarios['UsuarioID'] . ">" . $opcaoUsuarios['Nome'] . "</option>";
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                            ?>
+                                                                        </select>
+
+                                                                        <button type="submit" class="btn btn-danger" name="btnDeletarUsuario">
+                                                                            Confirmar
+                                                                            <i class="fa fa-trash" aria-hidden="true"></i>
+
+                                                                        </button>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        <?php } ?>
+
+                                                    </div>
+                                                </div>
+
+                                                <hr>
+                                                <h4 class="text-center">Enviar nova mensagem</h4>
+
+                                                <form action="builder.php" method="post">
+                                                    <input type="hidden" name="cmpRedeSocialID" value="Facebook">
+                                                    <input type="hidden" name="cmpMensageiro" value="<?= $contas['UsuarioID'] ?>">
+                                                    <label for="cmpUsuario">Usuários</label>
+                                                    <select class="custom-select mb-3" id="cmpUsuarioReceptor" name="cmpUsuarioReceptor" required>
+                                                        <option selected disabled>Escolha um usuário</option>
+                                                        <?php
+                                                        foreach ($usuariosContas as $key => $opcaoUsuarios) {
+                                                            if ($usuariosContas[$key]['Nome'] != $contas['Nome']) {
+                                                                if ($opcaoUsuarios['RedeSocialIDFK'] == $f[0]) {
+                                                                    echo "<option value=" . $opcaoUsuarios['UsuarioID'] . ">" . $opcaoUsuarios['Nome'] . "</option>";
+                                                                }
+                                                            }
                                                         }
                                                         ?>
                                                     </select>
@@ -173,81 +341,8 @@
                     </div>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-header" id="headingTwo">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#facebook" aria-expanded="false" aria-controls="collapseTwo">
-                            Usuários Facebook
-                        </button>
-                    </h2>
-                </div>
-                <div id="facebook" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                    <div class="card-body">
-                        <?php
-                        foreach ($usuariosContas as $contas) {
-                            if ($contas['RedeSocialIDFK'] == $f[0]) {
-                        ?>
-                                <div class="col-sm-4 mb-1">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h4>Usuário(a) <?= $contas['Nome'] ?> </h4>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="d-flex justify-content-center">
-                                                <img class="imgUsuario" src="https://bulma.io/images/placeholders/128x128.png">
-                                            </div>
 
-                                            <div class="row mt-5">
-                                                <div class="col-sm-6 mb-2">
-                                                    <button class="btn btn-primary w-100" data-toggle="modal" data-target="#msgEnviadas<?= $contas['UsuarioID'] ?>">
-                                                        Msg env
-                                                        <i class="fa fa-list" aria-hidden="true"></i>
-                                                    </button>
-                                                </div>
-                                                <div class="col-sm-6 mb-2">
-                                                    <button class="btn btn-primary w-100" data-toggle="modal" data-target="#msgRecebidas<?= $contas['UsuarioID'] ?>">
-                                                        Msg rece.
-                                                        <i class="fa fa-info-circle" aria-hidden="true"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                            <hr>
-                                            <h4 class="text-center">Enviar nova mensagem</h4>
-
-                                            <form action="builder.php" method="post">
-                                                <input type="hidden" name="cmpMensageiro" value="<?= $contas['UsuarioID'] ?>">
-                                                <label for="cmpUsuario">Usuários</label>
-                                                <select class="custom-select mb-3" id="cmpUsuarioReceptor" name="cmpUsuarioReceptor" required>
-                                                    <option selected disabled>Escolha um usuário</option>
-                                                    <?php
-                                                    foreach ($usuariosContas as $key => $opcaoUsuarios) {
-                                                        if ($usuariosContas[$key]['Nome'] != $contas['Nome'])
-                                                            echo "<option value=" . $opcaoUsuarios['UsuarioID'] . ">" . $opcaoUsuarios['Nome'] . "</option>";
-                                                    }
-                                                    ?>
-                                                </select>
-
-                                                <div class="form-group">
-                                                    <label for="cmpMensagem">Conteúdo da mensagem</label>
-                                                    <textarea class="form-control" id="cmpMensagem" name="cmpMensagem" rows="3" required></textarea>
-                                                </div>
-
-                                                <button type="submit" class="btn btn-success w-100" name="enviarMensagem">
-                                                    Enviar mensagem
-                                                    <i class="fa fa-check" aria-hidden="true"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                        <?php
-                            }
-                        }
-                        ?>
-                    </div>
-                </div>
-            </div>
+            <!-- TIP TOP-->
             <div class="card">
                 <div class="card-header" id="headingThree">
                     <h2 class="mb-0">
@@ -258,69 +353,117 @@
                 </div>
                 <div id="tipTop" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                     <div class="card-body">
-                        <?php
-                        if (count($usuariosContas) > 0) {
-                            foreach ($usuariosContas as $contas) {
-                                if ($contas['RedeSocialIDFK'] == $t[0]) {
-                        ?>
-                                    <div class="col-sm-4 mb-1">
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h4>Usuário(a) <?= $contas['Nome'] ?> </h4>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="d-flex justify-content-center">
-                                                    <img class="imgUsuario" src="https://bulma.io/images/placeholders/128x128.png">
+                        <div class="row">
+                            <?php
+                            if (count($usuariosContas) > 0) {
+                                foreach ($usuariosContas as $contas) {
+                                    if ($contas['RedeSocialIDFK'] == $t[0]) {
+                            ?>
+                                        <div class="col-sm-4 mb-1">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <h4>Usuário(a) <?= $contas['Nome'] ?> </h4>
                                                 </div>
+                                                <div class="card-body">
+                                                    <div class="d-flex justify-content-center">
+                                                        <img class="imgUsuario" src="https://bulma.io/images/placeholders/128x128.png">
+                                                    </div>
 
-                                                <div class="row mt-5">
-                                                    <div class="col-sm-6 mb-2">
-                                                        <button class="btn btn-primary w-100" data-toggle="modal" data-target="#msgEnviadas<?= $contas['UsuarioID'] ?>">
-                                                            Msg env
-                                                            <i class="fa fa-list" aria-hidden="true"></i>
-                                                        </button>
+                                                    <div class="row mt-5">
+                                                        <div class="col-sm-4 mb-2">
+                                                            <button class="btn btn-primary w-100" data-toggle="modal" data-target="#msgEnviadas<?= $contas['UsuarioID'] ?>">
+                                                                Msg env
+                                                                <i class="fa fa-list" aria-hidden="true"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-sm-4 mb-2">
+                                                            <button class="btn btn-primary w-100" data-toggle="modal" data-target="#msgRecebidas<?= $contas['UsuarioID'] ?>">
+                                                                Msg rece.
+                                                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                                            </button>
+                                                        </div>
+
+                                                        <?php if ($contas['Admin'] == 1) { ?>
+                                                            <div class="col-sm-4 mb-2">
+                                                                <button class="btn btn-danger w-100" type="button" data-toggle="collapse" data-target="#deletarUsuarioTipTop" aria-expanded="false" aria-controls="collapseExample">
+                                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                                </button>
+                                                            </div>
+                                                        <?php } ?>
                                                     </div>
-                                                    <div class="col-sm-6 mb-2">
-                                                        <button class="btn btn-primary w-100" data-toggle="modal" data-target="#msgRecebidas<?= $contas['UsuarioID'] ?>">
-                                                            Msg rece.
-                                                            <i class="fa fa-info-circle" aria-hidden="true"></i>
-                                                        </button>
+
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+
+                                                            <?php if ($contas['Admin'] == 1) { ?>
+                                                                <div class="collapse" id="deletarUsuarioTipTop">
+                                                                    <div class="card card-body">
+                                                                        <form action="builder.php" method="post">
+                                                                            <input type="hidden" name="cmpRedeSocialID" value="<?= $contas['RedeSocialIDFK'] ?>">
+                                                                            <select class="custom-select mb-3" name="cmpUsuarioID" required>
+                                                                                <option selected disabled>Escolha um usuário</option>
+                                                                                <?php
+                                                                                foreach ($usuariosContas as $key => $opcaoUsuarios) {
+                                                                                    if ($usuariosContas[$key]['Nome'] != $contas['Nome']) {
+                                                                                        if ($opcaoUsuarios['RedeSocialIDFK'] == $contas['RedeSocialIDFK']) {
+                                                                                            echo "<option value=" . $opcaoUsuarios['UsuarioID'] . ">" . $opcaoUsuarios['Nome'] . "</option>";
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                                ?>
+                                                                            </select>
+
+                                                                            <button type="submit" class="btn btn-danger" name="btnDeletarUsuario">
+                                                                                Confirmar
+                                                                                <i class="fa fa-trash" aria-hidden="true"></i>
+
+                                                                            </button>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            <?php } ?>
+
+                                                        </div>
                                                     </div>
+
+                                                    <hr>
+                                                    <h4 class="text-center">Enviar nova mensagem</h4>
+
+                                                    <form action="builder.php" method="post">
+                                                        <input type="hidden" name="cmpRedeSocialID" value="TipTop">
+                                                        <input type="hidden" name="cmpMensageiro" value="<?= $contas['UsuarioID'] ?>">
+                                                        <label for="cmpUsuario">Usuários</label>
+                                                        <select class="custom-select mb-3" id="cmpUsuarioReceptor" name="cmpUsuarioReceptor" required>
+                                                            <option selected disabled>Escolha um usuário</option>
+                                                            <?php
+                                                            foreach ($usuariosContas as $key => $opcaoUsuarios) {
+                                                                if ($usuariosContas[$key]['Nome'] != $contas['Nome']) {
+                                                                    if ($opcaoUsuarios['RedeSocialIDFK'] == $t[0]) {
+                                                                        echo "<option value=" . $opcaoUsuarios['UsuarioID'] . ">" . $opcaoUsuarios['Nome'] . "</option>";
+                                                                    }
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </select>
+
+                                                        <div class="form-group">
+                                                            <label for="cmpMensagem">Conteúdo da mensagem</label>
+                                                            <textarea class="form-control" id="cmpMensagem" name="cmpMensagem" rows="3" required></textarea>
+                                                        </div>
+
+                                                        <button type="submit" class="btn btn-success w-100" name="enviarMensagem">
+                                                            Enviar mensagem
+                                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                                        </button>
+                                                    </form>
                                                 </div>
-
-                                                <hr>
-                                                <h4 class="text-center">Enviar nova mensagem</h4>
-
-                                                <form action="builder.php" method="post">
-                                                    <input type="hidden" name="cmpMensageiro" value="<?= $contas['UsuarioID'] ?>">
-                                                    <label for="cmpUsuario">Usuários</label>
-                                                    <select class="custom-select mb-3" id="cmpUsuarioReceptor" name="cmpUsuarioReceptor" required>
-                                                        <option selected disabled>Escolha um usuário</option>
-                                                        <?php
-                                                        foreach ($usuariosContas as $key => $opcaoUsuarios) {
-                                                            if ($usuariosContas[$key]['Nome'] != $contas['Nome'])
-                                                                echo "<option value=" . $opcaoUsuarios['UsuarioID'] . ">" . $opcaoUsuarios['Nome'] . "</option>";
-                                                        }
-                                                        ?>
-                                                    </select>
-
-                                                    <div class="form-group">
-                                                        <label for="cmpMensagem">Conteúdo da mensagem</label>
-                                                        <textarea class="form-control" id="cmpMensagem" name="cmpMensagem" rows="3" required></textarea>
-                                                    </div>
-
-                                                    <button type="submit" class="btn btn-success w-100" name="enviarMensagem">
-                                                        Enviar mensagem
-                                                        <i class="fa fa-check" aria-hidden="true"></i>
-                                                    </button>
-                                                </form>
                                             </div>
                                         </div>
-                                    </div>
-                        <?php
+                            <?php
+                                    }
                                 }
-                            }
-                        } ?>
+                            } ?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -339,16 +482,36 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <ul class="list-group">
-                            <?php foreach ($mensagens as $mensagem) {
-                                if ($mensagem['mensageiroIDFK'] == $contas['UsuarioID']) {
-                                    echo '<li class="list-group-item">Conteúdo: ' . $mensagem['Conteudo'] . '</li>';
-                                }
-                            } ?>
-                        </ul>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Mensagens Enviadas</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($mensagens as $mensagem) {
+                                    if ($mensagem['mensageiroIDFK'] == $contas['UsuarioID']) {
+                                ?>
+                                        <tr>
+                                            <td scope="row">
+                                                <?= $mensagem['Conteudo']; ?>
+                                            </td>
+                                            <td>
+                                                <form method="post" action="builder.php">
+                                                    <input type="hidden" name="cmpRedeSocialID" value="<?= $contas['RedeSocialIDFK'] ?>">
+                                                    <input type="hidden" name="cmpMensagemDeletarID" value="<?= $mensagem['MensagemID'] ?>">
+                                                    <button type="submit" name="btnDeletarMensagem" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                <?php }
+                                } ?>
+                        </table>
+
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                     </div>
                 </div>
             </div>
@@ -376,7 +539,7 @@
                         </ul>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                     </div>
                 </div>
             </div>

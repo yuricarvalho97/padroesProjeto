@@ -46,4 +46,16 @@ class UsuarioDao
         $stmt->bindValue(2, $u->getEmailUsuario());
         return $stmt->execute();
     }
+
+    public function loadRedeSocial($RedeSocialID)
+    {
+        global $conn;
+
+        $sql = "SELECT * FROM padroesprojeto.redesocial WHERE RedeSocialID = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindValue(1, $RedeSocialID);
+        $stmt->execute();
+  
+        return $stmt->fetch();
+    }
 }

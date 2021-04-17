@@ -14,20 +14,4 @@ class MensagemDao
 
         return $stmt->fetchAll();
     }
-
-    function insert(Mensagem $m)
-    {
-        global $conn;
-
-        //Insere o novo usuário
-        $sql = "INSERT INTO padroesprojeto.mensagem(MensageiroIDFK, ReceptorIDFK, Conteudo, Created_at) VALUES (?, ?, ?, NOW())";
-        $stmt = $conn->prepare($sql);
-
-        $stmt->bindValue(1, $m->getMensageiroIDFK());
-        $stmt->bindValue(2, $m->getReceptorIDFK());
-        $stmt->bindValue(3, $m->getConteudo());
-        $stmt->execute();
-
-        return $conn->lastInsertId();
-    }
 }

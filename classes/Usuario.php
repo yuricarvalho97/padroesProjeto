@@ -97,15 +97,10 @@ class Usuario
         $usuarioDao->insert($u);
     }
 
-    public function criarMensagem()
+    public static function findRedeSocial($RedeSocialID)
     {
-    }
-
-    public function removerMensagem()
-    {
-    }
-
-    public function escolherRedeSocial()
-    {
+        $usuarioDao = new UsuarioDao;
+        
+        return $usuarioDao->loadRedeSocial($RedeSocialID);
     }
 }

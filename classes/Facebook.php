@@ -49,19 +49,34 @@ class Facebook implements RedeSocial
         $facebookDao->insert($nomeRedeSocial);
     }
 
+    public static function insereMensagem(Mensagem $mensagem)
+    {
+        $FacebookDao = new FacebookDao;
+
+        return $FacebookDao->insertMensagem($mensagem);
+    }
+
     public function enviarMensagemUsuario($mensagem)
     {
     }
-    public function removerMensagem($codigoMensagem)
+
+    public static function removerMensagem($codigoMensagem)
     {
+        $FacebookDao = new FacebookDao;
+
+        return $FacebookDao->deleteMensagem($codigoMensagem);
     }
+
     public function criarUsuario(Usuario $u)
     {
-       $usuarioDao = new UsuarioDao();
-       $usuarioDao->insert($u);
-       
+        $usuarioDao = new UsuarioDao();
+        $usuarioDao->insert($u);
     }
-    public function removerUsuario($codigoUsuario)
+
+    public static function removerUsuario($codigoUsuario)
     {
+        $FacebookDao = new FacebookDao;
+
+        return $FacebookDao->removeUsuario($codigoUsuario);
     }
 }

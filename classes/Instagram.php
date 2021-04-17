@@ -48,11 +48,21 @@ class Instagram implements RedeSocial
         $instagramDao->insert($nomeRedeSocial);
     }
 
-    public function enviarMensagemUsuario($mensagem)
+    public static function insereMensagem(Mensagem $mensagem)
     {
+        $instagramDao = new InstagramDao;
+
+        return $instagramDao->insertMensagem($mensagem);
     }
 
-    public function removerMensagem($codigoMensagem)
+    public static function removerMensagem($codigoMensagem)
+    {
+        $instagramDao = new InstagramDao;
+
+        return $instagramDao->deleteMensagem($codigoMensagem);
+    }
+
+    public function enviarMensagemUsuario($mensagem)
     {
     }
 
@@ -62,7 +72,10 @@ class Instagram implements RedeSocial
         $usuarioDao->insert($u);
     }
 
-    public function removerUsuario($codigoUsuario)
+    public static function removerUsuario($codigoUsuario)
     {
+        $instagramDao = new InstagramDao;
+
+        return $instagramDao->removeUsuario($codigoUsuario);
     }
 }
