@@ -372,13 +372,13 @@
                                                     <div class="row mt-5">
                                                         <div class="col-sm-4 mb-2">
                                                             <button class="btn btn-primary w-100" data-toggle="modal" data-target="#msgEnviadas<?= $contas['UsuarioID'] ?>">
-                                                                Msg env
+
                                                                 <i class="fa fa-list" aria-hidden="true"></i>
                                                             </button>
                                                         </div>
                                                         <div class="col-sm-4 mb-2">
                                                             <button class="btn btn-primary w-100" data-toggle="modal" data-target="#msgRecebidas<?= $contas['UsuarioID'] ?>">
-                                                                Msg rece.
+
                                                                 <i class="fa fa-info-circle" aria-hidden="true"></i>
                                                             </button>
                                                         </div>

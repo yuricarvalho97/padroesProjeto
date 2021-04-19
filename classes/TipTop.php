@@ -31,7 +31,6 @@ class TipTop implements RedeSocial
         $this->nomeRedeSocial = $nomeRedeSocial;
     }
 
-    //método responsável por procurar a redeSocial
     public static function find($nomeRedeSocial)
     {
         $tipTopDao = new TipTopDao;
@@ -40,7 +39,6 @@ class TipTop implements RedeSocial
         return $facebook;
     }
 
-    //método responsável por inserir a rede social
     public static function insere($nomeRedeSocial)
     {
         $tipTopDao = new TipTopDao;
@@ -53,10 +51,6 @@ class TipTop implements RedeSocial
         $TipTopDao = new TipTopDao;
 
         return $TipTopDao->insertMensagem($mensagem);
-    }
-
-    public function enviarMensagemUsuario($mensagem)
-    {
     }
 
     public static function removerMensagem($codigoMensagem)

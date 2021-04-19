@@ -31,7 +31,6 @@ class Instagram implements RedeSocial
         $this->nomeRedeSocial = $nomeRedeSocial;
     }
 
-    //método responsável por procurar a redeSocial
     public static function find($nomeRedeSocial)
     {
         $instagramDao = new InstagramDao;
@@ -40,7 +39,6 @@ class Instagram implements RedeSocial
         return $instagram;
     }
 
-    //método responsável por inserir a rede social
     public static function insere($nomeRedeSocial)
     {
         $instagramDao = new InstagramDao;
@@ -60,10 +58,6 @@ class Instagram implements RedeSocial
         $instagramDao = new InstagramDao;
 
         return $instagramDao->deleteMensagem($codigoMensagem);
-    }
-
-    public function enviarMensagemUsuario($mensagem)
-    {
     }
 
     public static function criarUsuario(Usuario $u)

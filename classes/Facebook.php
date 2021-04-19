@@ -32,7 +32,6 @@ class Facebook implements RedeSocial
         $this->nomeRedeSocial = $nomeRedeSocial;
     }
 
-    //método responsável por procurar a redeSocial
     public static function find($nomeRedeSocial)
     {
         $facebookDao = new FacebookDao;
@@ -41,7 +40,6 @@ class Facebook implements RedeSocial
         return $facebook;
     }
 
-    //método responsável por inserir a rede social
     public static function insere($nomeRedeSocial)
     {
         $facebookDao = new FacebookDao;
@@ -54,10 +52,6 @@ class Facebook implements RedeSocial
         $FacebookDao = new FacebookDao;
 
         return $FacebookDao->insertMensagem($mensagem);
-    }
-
-    public function enviarMensagemUsuario($mensagem)
-    {
     }
 
     public static function removerMensagem($codigoMensagem)
