@@ -51,14 +51,28 @@ if (isset($_POST['btnEnviarFormularioUsuario'])) {
     }
 
     //CADASTRAR USUÁRIO
-    //Cria o usuário e seta os atributos recebidos do formulário
-    $usuario = new Usuario;
-    $usuario->setNomeUsuario($_POST["cmpNome"]);
-    $usuario->setSobrenomeUsuario($_POST["cmpSobrenome"]);
-    $usuario->setEmailUsuario($_POST["cmpEmail"]);
-    $usuario->setTelefoneUsuario($_POST["cmpTelefone"]);
-    $usuario->setSenhaUsuario($_POST["cmpSenha"]);
-    $usuario->setUsuarioAdmin($_POST["cmpAdmin"]);
+    switch ($_POST['cmpAdmin']) {
+        case 0:
+            //Se veio o valor 0 do formulário, cria um usuário padrão
+            $usuario = new Usuario;
+            $usuario->setNomeUsuario($_POST["cmpNome"]);
+            $usuario->setSobrenomeUsuario($_POST["cmpSobrenome"]);
+            $usuario->setEmailUsuario($_POST["cmpEmail"]);
+            $usuario->setTelefoneUsuario($_POST["cmpTelefone"]);
+            $usuario->setSenhaUsuario($_POST["cmpSenha"]);
+            $usuario->setUsuarioAdmin($_POST["cmpAdmin"]);
+
+        case 1:
+            //Se veio o valor 1 do formulário, cria um usuário administrador
+            $usuario = new UsuarioAdmin;
+            $usuario->setNomeUsuario($_POST["cmpNome"]);
+            $usuario->setSobrenomeUsuario($_POST["cmpSobrenome"]);
+            $usuario->setEmailUsuario($_POST["cmpEmail"]);
+            $usuario->setTelefoneUsuario($_POST["cmpTelefone"]);
+            $usuario->setSenhaUsuario($_POST["cmpSenha"]);
+            $usuario->setUsuarioAdmin($_POST["cmpAdmin"]);
+            break;
+    }
 
     //Insere o usuário na rede social selecionada
     switch ($_POST["cmpRedeSocial"]) {
