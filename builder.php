@@ -5,7 +5,7 @@ session_start();
 
 //arquivo de conexao
 require "autoload.php";
-
+/*
 //CADASTRAR USUÁRIO
 if (isset($_POST['btnEnviarFormularioUsuario'])) {
     $redesocial = '';
@@ -49,7 +49,7 @@ if (isset($_POST['btnEnviarFormularioUsuario'])) {
             }
             break;
     }
-
+ 
     //CADASTRAR USUÁRIO
     switch ($_POST['cmpAdmin']) {
         case 0:
@@ -101,7 +101,7 @@ if (isset($_POST['btnEnviarFormularioUsuario'])) {
     }
     header('Location: index.php');
 }
-
+*/
 //DELETAR USUÁRIO
 if (isset($_POST['btnDeletarUsuario'])) {
     $nomeRedesocial = Usuario::findRedeSocial($_POST['cmpRedeSocialID']);
