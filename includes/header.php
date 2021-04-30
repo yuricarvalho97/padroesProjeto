@@ -1,3 +1,7 @@
+<!--
+    CABEÇALHO DA VIEW...
+-->
+
 <?php
 require __DIR__ . "/../autoload.php";
 require __DIR__ . "/../classes/Usuario.php";
@@ -22,11 +26,9 @@ $f = Facebook::find($facebook->getNomeRedeSocial());
 
 $tipTop = new TipTop;
 $tipTop->setNomeRedeSocial('TipTop');
-$t = Facebook::find($tipTop->getNomeRedeSocial());
+$t = TipTop::find($tipTop->getNomeRedeSocial());
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="pt-BR">
