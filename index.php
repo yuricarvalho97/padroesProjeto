@@ -1,5 +1,8 @@
 <?php include "./includes/header.php"; ?>
 
+<!--
+    ARQUIVO DE VIEW...    
+-->
 <div class="container">
 
     <!-- CADASTRO DE USUÁRIOS -->
@@ -22,6 +25,7 @@
         <hr>
         <div class="row">
             <div class="col-sm-12">
+                <!-- FORMULÁRIO RESPONSÁVEL POR CADASTRAR OS USUÁRIOS -->
                 <form method="post" action="builder.php">
                     <div class="row">
                         <div class="col-sm-6">
@@ -110,7 +114,7 @@
                         <div class="row">
                             <?php
                             foreach ($usuariosContas as $contas) {
-                                if ($contas['RedeSocialIDFK'] == $i[0]) {
+                                if ($i != false && $contas['RedeSocialIDFK'] == $i[0]) {
                             ?>
                                     <div class="col-sm-4 mb-1">
                                         <div class="card">
@@ -149,6 +153,7 @@
                                                         <?php if ($contas['Admin'] == 1) { ?>
                                                             <div class="collapse" id="deletarUsuarioInstagram">
                                                                 <div class="card card-body">
+                                                                    <!-- formulário responsável por deletar os usuários do instagram-->
                                                                     <form action="builder.php" method="post">
                                                                         <input type="hidden" name="cmpRedeSocialID" value="<?= $contas['RedeSocialIDFK'] ?>">
                                                                         <select class="custom-select mb-3" name="cmpUsuarioID" required>
@@ -178,8 +183,8 @@
 
                                                 <hr>
                                                 <h4 class="text-center">Enviar nova mensagem</h4>
-
-                                                <form action="builder.php" method="post">
+                                                <!-- FORMULÁRIO RESPONSÁVEL POR ENVIAR AS MENSAGENS PARA CADASTRO -->
+                                                <form action="AcoesMensagens.php" method="post">
                                                     <input type="hidden" name="cmpRedeSocialID" value="Instagram">
                                                     <input type="hidden" name="cmpMensageiro" value="<?= $contas['UsuarioID'] ?>">
                                                     <label for="cmpUsuario">Usuários</label>
@@ -234,7 +239,7 @@
                         <div class="row">
                             <?php
                             foreach ($usuariosContas as $contas) {
-                                if ($contas['RedeSocialIDFK'] == $f[0]) {
+                                if ($f != false && $contas['RedeSocialIDFK'] == $f[0]) {
                             ?>
                                     <div class="col-sm-4 mb-1">
                                         <div class="card">
@@ -272,6 +277,7 @@
                                                         <?php if ($contas['Admin'] == 1) { ?>
                                                             <div class="collapse" id="deletarUsuarioFacebook">
                                                                 <div class="card card-body">
+                                                                    <!-- FORMULÁRIO RESPONSÁVEL POR DELETAR OS USUÁRIOS DO FACEBOOK-->
                                                                     <form action="builder.php" method="post">
                                                                         <input type="hidden" name="cmpRedeSocialID" value="<?= $contas['RedeSocialIDFK'] ?>">
                                                                         <select class="custom-select mb-3" name="cmpUsuarioID" required>
@@ -302,8 +308,8 @@
 
                                                 <hr>
                                                 <h4 class="text-center">Enviar nova mensagem</h4>
-
-                                                <form action="builder.php" method="post">
+                                                <!-- FORMULÁRIO RESPONSÁVEL POR ENVIAR AS MENSAGENS DO USUÁRIO FACEBOOK-->
+                                                <form action="AcoesMensagens.php" method="post">
                                                     <input type="hidden" name="cmpRedeSocialID" value="Facebook">
                                                     <input type="hidden" name="cmpMensageiro" value="<?= $contas['UsuarioID'] ?>">
                                                     <label for="cmpUsuario">Usuários</label>
@@ -357,7 +363,7 @@
                             <?php
                             if (count($usuariosContas) > 0) {
                                 foreach ($usuariosContas as $contas) {
-                                    if ($contas['RedeSocialIDFK'] == $t[0]) {
+                                    if ($t != false && $contas['RedeSocialIDFK'] == $t[0]) {
                             ?>
                                         <div class="col-sm-4 mb-1">
                                             <div class="card">
@@ -398,6 +404,7 @@
                                                             <?php if ($contas['Admin'] == 1) { ?>
                                                                 <div class="collapse" id="deletarUsuarioTipTop">
                                                                     <div class="card card-body">
+                                                                        <!-- FORMULÁRIO RESPONSÁVEL POR DELETAR OS USUÁRIOS DO TIP TOP-->
                                                                         <form action="builder.php" method="post">
                                                                             <input type="hidden" name="cmpRedeSocialID" value="<?= $contas['RedeSocialIDFK'] ?>">
                                                                             <select class="custom-select mb-3" name="cmpUsuarioID" required>
@@ -428,8 +435,8 @@
 
                                                     <hr>
                                                     <h4 class="text-center">Enviar nova mensagem</h4>
-
-                                                    <form action="builder.php" method="post">
+                                                    <!-- FORMULÁRIO RESPONSÁVEL POR ENVIAR AS MENSAGENS DO USUÁRIO DO TIPTOP-->
+                                                    <form action="AcoesMensagens.php" method="post">
                                                         <input type="hidden" name="cmpRedeSocialID" value="TipTop">
                                                         <input type="hidden" name="cmpMensageiro" value="<?= $contas['UsuarioID'] ?>">
                                                         <label for="cmpUsuario">Usuários</label>
@@ -498,7 +505,8 @@
                                                 <?= $mensagem['Conteudo']; ?>
                                             </td>
                                             <td>
-                                                <form method="post" action="builder.php">
+                                                <!-- FORMULÁRIO RESPONSÁVEL POR DELETAR AS MENSAGENS-->
+                                                <form method="post" action="AcoesMensagens.php">
                                                     <input type="hidden" name="cmpRedeSocialID" value="<?= $contas['RedeSocialIDFK'] ?>">
                                                     <input type="hidden" name="cmpMensagemDeletarID" value="<?= $mensagem['MensagemID'] ?>">
                                                     <button type="submit" name="btnDeletarMensagem" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i></button>

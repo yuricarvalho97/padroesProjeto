@@ -2,27 +2,38 @@
 
 require_once __DIR__ . '/../conf/database.php';
 
+/*
+    A class DBConexão está aplicando o padrão Singleton
+*/
 class DBConexao
 {
-    private $host = HOST;
-    private $db = DB;
-    private $user = USER;
-    private $password = PASSWORD;
-    private $conn;
+    //definindo constantes para a conexão
+    private static $host = HOST;
+    private static $db = DB;
+    private static $user = USER;
+    private static $password = PASSWORD;
 
-    public function __construct()
+    //variável public estática para a conexão
+    public static $instance;
+
+    //deixando o construtor privato para que ninguém possa instanciar a Classe diretamente
+    private function __construct()
     {
+    }
 
+    public static function getInstance()
+    {
         try {
-            $this->conn = new PDO("mysql: dbname=  $this->db; :host= $this->host", $this->user, $this->password);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            // verificando se a variável instance não foi criada
+            if (!isset(self::$instance)) {
+                self::$instance = new PDO('mysql: host=' . self::$host . ';dbname=' . self::$db, self::$user, self::$password);
+                self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                self::$instance->setAttribute(PDO::ATTR_ORACLE_NULLS, PDO::NULL_EMPTY_STRING);
+            }
+
+            return self::$instance;
         } catch (PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
         }
-    }
-
-    public function retornarConexao()
-    {
-        return $this->conn;
     }
 }
